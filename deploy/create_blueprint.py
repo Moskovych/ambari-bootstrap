@@ -27,13 +27,14 @@ def _fix_components(blueprint):
     for host_group in blueprint['host_groups']:
         components = host_group['components']
         components.append({'name': 'SPARK_CLIENT'})
+        components.append({'name': 'SQOOP'})
+        components.append({'name': 'HIVE_CLIENT'})
         for problem_component in problem_components:
             entry = {'name': problem_component}
             if entry in components:
                 components.remove(entry)
         if {'name': 'HIVE_METASTORE'} in components:
             components.append({'name': 'MYSQL_SERVER'})
-            components.append({'name': 'SQOOP'})
         if {'name': 'HBASE_MASTER'} in components:
             if {'name': 'PHOENIX_QUERY_SERVER'} not in components:
                 components.append({'name': 'PHOENIX_QUERY_SERVER'})
